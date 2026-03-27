@@ -60,7 +60,7 @@ The registration follows a strict **three-phase procedure**:
 | LMORB | Lowest point on left orbital rim (orbitale) | Left | Fixed anatomical landmark |
 | RMORB | Lowest point on right orbital rim (orbitale) | Right | Fixed anatomical landmark |
 | Nasion | Midline point at frontonasal suture | Midline | Fixed anatomical landmark |
-| PML | Posterior Midline Fiducial | Midline | e.g. posterior fossa midline point |
+| PML | Posterior Midline Fiducial | Midline | e.g. Opisthion , Foramen of Monro |
 | REF | Reference point (user-defined) | — | e.g. head of mandible (HOM) |
 | POI 1…N | Points of interest | — | Multiple targets measured in one session |
 

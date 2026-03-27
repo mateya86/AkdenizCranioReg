@@ -147,14 +147,13 @@ python akdeniz_cranio_reg.py
 
 ## Test Data
 
-Two sample cranial STL models are provided in the `test_data/` folder for validation and demonstration purposes.
+One sample cranial STL model is provided in the `test_data/` folder for validation and demonstration purposes.
 
 | File | REF point | POI |
 |------|-----------|-----|
-| `ref point left HOM, poi=FOM.stl` | Left Head of Mandible (HOM) | Foramen of Monro (FOM) |
-| `ref point right HOM, poi=FOM.stl` | Right Head of Mandible (HOM) | Foramen of Monro (FOM) |
+| `ref point left HOM, poi=FOM,Asterion.stl` | Left Head of Mandible (HOM) | Foramen of Monro (FOM), Left Asterion |
 
-These models allow users to reproduce the full three-phase registration workflow and verify measurement outputs before applying the tool to their own data.
+This model allows users to reproduce the full three-phase registration workflow and verify measurement outputs before applying the tool to their own data.
 
 ---
 
@@ -184,7 +183,7 @@ AkdenizCranioReg/
 ├── requirements.txt
 ├── LICENSE
 ├── screenshots/                ← demo video and phase screenshots
-└── test_data/                  ← sample STL models
+└── test_data/                  ← sample STL model
 ```
 
 ---
@@ -217,4 +216,7 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 **Muhammad Ateya**
 Akdeniz University – Department of Neurosurgery, Antalya, Turkey
 
-Feel free to open an issue or contact via GitHub for questions, feature requests, or collaboration.
+- GitHub: [mateya86](https://github.com/mateya86)
+- Email: [tc.muhammad86@gmail.com](mailto:tc.muhammad86@gmail.com)
+
+Feel free to open an issue or reach out via email for questions, feature requests, or collaboration.

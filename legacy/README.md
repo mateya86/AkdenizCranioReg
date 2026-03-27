@@ -1,4 +1,4 @@
-# AkdenizCranioReg
+# AkdenizCranioReg — Legacy
 
 **Three-phase fiducial-based rigid registration tool for cranial STL models**
 
@@ -7,44 +7,92 @@
 
 Developed at **Akdeniz University – Department of Neurosurgery**, Antalya, Turkey.
 
+---
+
+> **This is the legacy (single-POI) release of AkdenizCranioReg.**
+> It is preserved here for reference and reproducibility.
+> The current maintained version — which supports multiple points of interest and full X, Y, Z output — is available at the [root of the repository](../).
+
+---
+
+## What is different in this version?
+
+This release measures a **single point of interest (POI)** per session and outputs only **X (anteroposterior)** and **Z (superoinferior)** distances relative to the reference point — i.e. it defines the lateral projection of brain structures.
+
+| Feature | This version (legacy) | Current version |
+|---------|----------------------|-----------------|
+| Points of interest | Single (REF + POI) | Multiple (REF + POI 1…N) |
+| Output axes | X, Z only | X, Y, Z per POI |
+| HUD | Two-line X and Z display | Table of X/Y/Z per point |
+
+---
+
 ## Purpose
 
 AkdenizCranioReg is an interactive Python application that performs **landmark-based rigid registration** of cranial surface meshes (STL format) to standardized anatomical reference planes.
 
-It supports reproducible measurement of the lateral projection of brain structures, surgical targets and anatomical landmarks in neurosurgical planning and research.
+It supports reproducible allocation of the lateral projection of brain structures, surgical targets, and anatomical landmarks in neurosurgical planning and research.
+
+---
 
 ## Workflow
 
 The registration follows a strict **three-phase procedure**:
 
-1. **Frankfurt horizontal plane** alignment  
+1. **Frankfurt horizontal plane** alignment
    using the highest points of the left and right ear canals (LEAC, REAC) and the lowest points on the orbital rims (LMORB, RMORB)
 
-2. **Midsagittal plane** alignment  
-   using nasion and PML (Posterior Midline Fiducial)
+2. **Midsagittal plane** alignment
+   using Nasion and PML (Posterior Midline Fiducial)
 
-3. **Distance measurement**  
-   from a user-defined reference point (REF) to a point of interest (POI)  
-   → outputs perpendicular **X (anteroposterior)** and **Z (superoinferior)** distances
+3. **Distance measurement**
+   from a user-defined reference point (REF) to a single point of interest (POI)
+   outputs **X (anteroposterior)** and **Z (superoinferior)** distances
+
+---
 
 ## Features
 
 - Interactive 3D landmark picking with visual feedback (PyVista)
 - Frankfurt plane alignment with RMSE reporting
-- Automatic midsagittal (YZ) alignment
-- Anatomical coordinate system:  
-  X = A/P (blue), Y = L/R (black), Z = S/I (yellow)
-- Measurement visualization with colored lines
-- Clean HUD showing X and Z distances + RMSE
+- Automatic midsagittal plane alignment using Nasion–PML
+- Single point of interest measurement per session
+- Color-coded measurement lines (black, yellow, blue)
+- Clean two-line HUD displaying X and Z distances + RMSE
 - Single-file executable script (no complex installation)
 
-## Setup & Usage
+**Output:**
+- **Distance X** — anteroposterior distance from REF to POI
+- **Distance Z** — superoinferior distance from REF to POI
+- **Frankfurt alignment RMSE** — goodness of fit of the Frankfurt plane
+
+---
+
+## Landmark Definitions
+
+| Landmark | Description | Side | Note |
+|----------|-------------|------|------|
+| LEAC | Highest point (roof) of left external auditory canal | Left | Fixed anatomical landmark |
+| REAC | Highest point (roof) of right external auditory canal | Right | Fixed anatomical landmark |
+| LMORB | Lowest point on left orbital rim (orbitale) | Left | Fixed anatomical landmark |
+| RMORB | Lowest point on right orbital rim (orbitale) | Right | Fixed anatomical landmark |
+| Nasion | Midline point at frontonasal suture | Midline | Fixed anatomical landmark |
+| PML | Posterior Midline Fiducial | Midline | e.g. foramen of Monro |
+| REF | Reference point (user-defined) | — | e.g. head of mandible (HOM) |
+| POI | Single point of interest | — | e.g. foramen of Monro |
+
+---
+
+## Setup & Installation
 
 ```bash
 git clone https://github.com/mateya86/AkdenizCranioReg.git
-cd AkdenizCranioReg
+cd AkdenizCranioReg/legacy
+```
 
-# Create virtual environment (recommended)
+Create a virtual environment (recommended):
+
+```bash
 python -m venv venv
 
 # Linux / macOS
@@ -52,110 +100,92 @@ source venv/bin/activate
 
 # Windows
 venv\Scripts\activate
+```
 
-pip install -r requirements.txt
+Install dependencies:
 
-# Run the tool
-python akdeniz_cranio_reg.py
+```bash
+pip install numpy scipy pyvista
+```
 
-1. Click "Open STL and Register"
+---
 
-2. Follow the guided picking phases:  
-   Phase 1 – Frankfurt plane  
-   Pick in order: LEAC → REAC → LMORB → RMORB  
-   Phase 2 – Midsagittal alignment  
-   Pick: Nasion → PML (Posterior Midline Fiducial)  
-   Phase 3 – Measurement  
-   Pick: REF (reference point, e.g. head of mandible / HOM) → POI (point of interest, e.g. foramen of Monro or any structure you want to measure relative to REF)
+## Usage
 
-3. After picking, the registered model with planes and measurement lines appears.
+```bash
+python akdeniz_cranio_reg_legacy.py
+```
 
-## Landmark Definitions
+1. Click **"Open STL and Register"**
+2. **Phase 1 – Frankfurt plane**
+   Pick in order: LEAC → REAC → LMORB → RMORB
+3. **Phase 2 – Midsagittal alignment**
+   Pick: Nasion → PML (Posterior Midline Fiducial)
+4. **Phase 3 – Measurement**
+   Pick: REF (e.g. head of mandible) → POI (e.g. foramen of Monro)
+5. Registered model with planes and measurement lines appears — Distance X, Distance Z, and RMSE shown in HUD
 
-| Landmark | Description                                          | Side    | Note / typical example                     |
-|----------|------------------------------------------------------|---------|--------------------------------------------|
-| LEAC     | Highest point (roof) of left external auditory canal | Left    | Fixed anatomical landmark                  |
-| REAC     | Highest point (roof) of right external auditory canal| Right   | Fixed anatomical landmark                  |
-| LMORB    | Lowest point on left orbital rim (orbitale)          | Left    | Fixed anatomical landmark                  |
-| RMORB    | Lowest point on right orbital rim (orbitale)         | Right   | Fixed anatomical landmark                  |
-| Nasion   | Midline point at frontonasal suture                  | Midline | Fixed anatomical landmark                  |
-| PML      | Posterior Midline Fiducial                           | Midline | Fixed anatomical landmark (e.g. foramen of Monro) |
-| REF      | Reference point (user-defined)                       | —       | e.g. head of mandible (HOM)                |
-| POI      | Point of interest (structure being measured)         | —       | e.g. foramen of Monro                      |
-
-## Coordinate System & Outputs
-
-After registration:
-
-- **X (blue)** → Anteroposterior (positive = anterior)
-- **Y (black)** → Left–Right (positive = right)
-- **Z (yellow)** → Superoinferior (positive = superior)
-
-**Displayed in HUD:**
-- Distance X (A/P)
-- Distance Z (S/I)
-- Frankfurt alignment RMSE
+---
 
 ## Demo Video
 
-Watch a quick 1-minute demonstration of the full three-phase workflow:
+[Click here to watch the demo video](https://github.com/mateya86/AkdenizCranioReg/raw/main/legacy/screenshots/AkdenizCranioReg_Demo.mp4)
 
-<video width="800" controls>
-  <source src="screenshots/AkdenizCranioReg_Demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+*Demonstrates fiducial extraction, landmark picking (Frankfurt + Midsagittal), alignment, and final X/Z distance measurement for a single point of interest.*
 
-*Demonstrates fiducial extraction, landmark picking (Frankfurt + Midsagittal), alignment, and final X/Z distance measurement with visual feedback.*
+---
 
 ## Screenshots
 
-Phase 1 — Picking LEAC, REAC, LMORB, and RMORB for Frankfurt horizontal plane alignment
+### Phase 1 — Frankfurt Plane Alignment
+*Picking LEAC, REAC, LMORB, and RMORB*
 
-Phase 2 — Picking Nasion and PML (Posterior Midline Fiducial)
+![Phase 1](https://raw.githubusercontent.com/mateya86/AkdenizCranioReg/main/legacy/screenshots/phase1_picking.png)
 
-Phase 3 — Picking Reference point (REF) and Point of Interest (POI)
+### Phase 2 — Midsagittal Alignment
+*Picking Nasion and PML*
 
-Final registered model showing Frankfurt plane (gold), midsagittal plane (green), measurement lines (blue, black, yellow), and HUD with X/Z distances and RMSE
+![Phase 2](https://raw.githubusercontent.com/mateya86/AkdenizCranioReg/main/legacy/screenshots/phase2_picking.png)
 
-## Data Validation (RMSE)
+### Phase 3 — Single POI Measurement
+*Picking Reference point (REF) and Point of Interest (POI)*
 
-The tool calculates the Frankfurt Alignment RMSE using the following logic:
+![Phase 3](https://raw.githubusercontent.com/mateya86/AkdenizCranioReg/main/legacy/screenshots/phase3_picking.png)
 
-RMSE = √[ Σ (zᵢ - z̄)² / n ]
+### Final Result
+*Registered model with Frankfurt plane (gold), midsagittal plane (green), measurement lines, and HUD*
+
+![Final Result](https://raw.githubusercontent.com/mateya86/AkdenizCranioReg/main/legacy/screenshots/final_result.png)
+
+---
+
+## Segmentation and Registration Quality Validation (RMSE)
+
+The tool calculates the Frankfurt Alignment RMSE using:
+
+```
+RMSE = sqrt[ sum (zi - z_mean)^2 / n ]
+```
 
 Where:
+- `zi` = vertical position of each Frankfurt point after alignment
+- `z_mean` = mean vertical height (centroid) of all 4 points
+- `n` = number of points (4)
 
-√ = Square root of the entire result.
+In clinical practice, an **RMSE < 2.0 mm** is generally considered an excellent fit, accounting for natural cranial asymmetry and picking precision. If your RMSE is high, re-pick the Frankfurt landmarks ensuring they are properly seated on the bony surface.
 
-Σ = The sum of all values.
-
-zᵢ = The vertical position of each individual Frankfurt point.
-
-z̄ (z-bar) = The average vertical height (centroid) of all 4 points.
-
-n = The number of points (in Phase 1, n = 4).
-
-In clinical practice, an RMSE < 2.0 mm is generally considered an excellent fit, accounting for natural cranial asymmetry and picking precision. If your RMSE is high, we recommend re-picking the Frankfurt landmarks (LEAC, REAC, LMORB, RMORB) to ensure they are properly seated on the bony surface.
-
-
-## Citation
-
-@software{ateya_akdenizcranioreg_2026,
-  author       = {Ateya, Muhammad},
-  title        = {AkdenizCranioReg: Three-phase cranial STL registration tool},
-  year         = {2026},
-  publisher    = {Akdeniz University – Department of Neurosurgery},
-  url          = {https://github.com/mateya86/AkdenizCranioReg},
-  howpublished = {Computer software}
-}
+---
 
 ## License
 
-MIT License — see the LICENSE file.
+MIT License — see the [LICENSE](../LICENSE) file for details.
 
-##Contact
+---
 
-Muhammad Ateya
-Akdeniz University – Department of Neurosurgery
-Antalya, Turkey
-Feel free to open an issue or contact me for questions, feature requests or collaboration.
+## Contact
+
+**Muhammad Ateya**
+Akdeniz University – Department of Neurosurgery, Antalya, Turkey
+
+- GitHub: [mateya86](https://github.com/mateya86)
+- Email: [tc.muhammad86@gmail.com](mailto:tc.muhammad86@gmail.com)

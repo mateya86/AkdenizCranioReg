@@ -13,7 +13,7 @@ Developed at **Akdeniz University – Department of Neurosurgery**, Antalya, Tur
 
 AkdenizCranioReg is an interactive Python application that performs **landmark-based rigid registration** of cranial surface meshes (STL format) to standardized anatomical reference planes.
 
-It supports reproducible measurement of the lateral projection of brain structures, surgical targets, and anatomical landmarks in neurosurgical planning and research.
+It supports reproducible three-dimensional coordinate measurement (X, Y, Z) of brain structures, surgical targets, and anatomical landmarks in neurosurgical planning and research.
 
 ---
 

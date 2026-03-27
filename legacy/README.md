@@ -31,7 +31,7 @@ This release measures a **single point of interest (POI)** per session and outpu
 
 AkdenizCranioReg is an interactive Python application that performs **landmark-based rigid registration** of cranial surface meshes (STL format) to standardized anatomical reference planes.
 
-It supports reproducible allocation of the lateral projection of brain structures, surgical targets, and anatomical landmarks in neurosurgical planning and research.
+It supports reproducible measurement of the lateral projection of brain structures, surgical targets and anatomical landmarks in neurosurgical planning and research.
 
 ---
 
@@ -156,6 +156,19 @@ python akdeniz_cranio_reg_legacy.py
 *Registered model with Frankfurt plane (gold), midsagittal plane (green), measurement lines, and HUD*
 
 ![Final Result](https://raw.githubusercontent.com/mateya86/AkdenizCranioReg/main/legacy/screenshots/final_result.png)
+
+---
+
+## Test Data
+
+Two sample cranial STL models are provided in the `legacy/test_data/` folder for validation and demonstration purposes.
+
+| File | REF point | POI |
+|------|-----------|-----|
+| `ref point left HOM, poi=FOM.stl` | Left Head of Mandible (HOM) | Foramen of Monro (FOM) |
+| `ref point right HOM, poi=FOM.stl` | Right Head of Mandible (HOM) | Foramen of Monro (FOM) |
+
+These models allow users to reproduce the full three-phase registration workflow and verify measurement outputs before applying the tool to their own data.
 
 ---
 
